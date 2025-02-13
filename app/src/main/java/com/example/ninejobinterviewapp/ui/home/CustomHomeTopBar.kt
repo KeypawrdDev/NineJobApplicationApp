@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Icon
@@ -20,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CustomTopBar(
+fun CustomHomeTopBar(
     title: String,
     backgroundColor: Color = Color.White,
     contentColor: Color = Color.Black,
@@ -30,7 +29,6 @@ fun CustomTopBar(
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp) // Standard height for AppBar
-            .padding(horizontal = 16.dp)
             .background(backgroundColor)
     ) {
         // Title aligned to the center
@@ -59,7 +57,7 @@ fun CustomTopBar(
 @Preview
 @Composable
 fun PreviewCustomTopBar() {
-    CustomTopBar(
+    CustomHomeTopBar(
         title = "Latest News",
         backgroundColor = Color.White,
         contentColor = Color.Black,
