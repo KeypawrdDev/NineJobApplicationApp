@@ -1,18 +1,15 @@
 package com.example.ninejobinterviewapp.ui.home
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun DropdownMenuComponent(
@@ -23,24 +20,30 @@ fun DropdownMenuComponent(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    // ✅ Correct Modifier with wrapContentSize
     Box(modifier = Modifier.wrapContentSize(align = Alignment.TopStart)) {
         TextButton(onClick = { expanded = true }) {
-            Text("$label: $selectedOption")
+            Text("$label: $selectedOption",
+                style = MaterialTheme.typography.titleLarge.copy(fontSize = 20.sp),
+                color = Color.White
+                )
         }
 
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            options.forEach { option ->
-                DropdownMenuItem(
-                    text = { Text(option) },
-                    onClick = {
-                        onOptionSelected(option)
-                        expanded = false
+            Box(modifier = Modifier.heightIn(max = 250.dp)) { // ✅ Limit height for scrollable area
+                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                    options.forEach { option ->
+                        DropdownMenuItem(
+                            text = { Text(option) },
+                            onClick = {
+                                onOptionSelected(option)
+                                expanded = false
+                            }
+                        )
                     }
-                )
+                }
             }
         }
     }

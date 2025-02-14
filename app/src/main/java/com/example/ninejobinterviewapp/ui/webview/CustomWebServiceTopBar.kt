@@ -2,11 +2,7 @@ package com.example.ninejobinterviewapp.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Share
@@ -16,7 +12,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun CustomWebServiceTopBar(
@@ -28,7 +26,7 @@ fun CustomWebServiceTopBar(
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.primary)
-            .padding(horizontal = 8.dp, vertical = 12.dp),
+            .padding(start = 8.dp, end = 8.dp, top = 32.dp, bottom = 12.dp), // ✅ Padding applied to the whole top bar
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         // ✅ Back Button
@@ -41,13 +39,16 @@ fun CustomWebServiceTopBar(
                 .clickable { onBackClick() }
         )
 
-        // ✅ Title
+        // ✅ Title with Ellipsis and Larger Font Size
         Text(
             text = title,
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.titleLarge.copy(fontSize = 20.sp),
             color = Color.White,
-            modifier = Modifier.weight(1f),
-            maxLines = 1
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 8.dp),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
 
         // ✅ Share Button

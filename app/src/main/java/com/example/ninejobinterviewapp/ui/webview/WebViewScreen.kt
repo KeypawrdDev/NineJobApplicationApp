@@ -5,13 +5,10 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
@@ -32,16 +29,22 @@ fun WebViewScreen(
     // ✅ Decode URL for WebView
     val decodedUrl = URLDecoder.decode(url, StandardCharsets.UTF_8.toString())
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        // ✅ Custom Web Service Top Bar
-        CustomWebServiceTopBar(
-            title = pageTitle,
-            onBackClick = { navController.popBackStack() },
-            onShareClick = { shareUrl(navController.context, decodedUrl) }
-        )
-
-        // ✅ WebView Container
-        Box(modifier = Modifier.weight(1f)) {
+    // ✅ Use Scaffold for Proper Screen Structure
+    Scaffold(
+        topBar = {
+            CustomWebServiceTopBar(
+                title = pageTitle,
+                onBackClick = { navController.popBackStack() },
+                onShareClick = { shareUrl(navController.context, decodedUrl) }
+            )
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            // ✅ WebView Container
             AndroidView(
                 factory = { context ->
                     WebView(context).apply {
@@ -55,7 +58,6 @@ fun WebViewScreen(
                             javaScriptEnabled = true
                             cacheMode = WebSettings.LOAD_DEFAULT
                         }
-                        // ✅ Load Decoded URL
                         loadUrl(decodedUrl)
                         webView = this
                     }
@@ -64,10 +66,9 @@ fun WebViewScreen(
             )
         }
 
-        // ✅ Back Handler for WebView
+        // ✅ Back Handler for WebView Navigation
         BackHandler(enabled = backEnabled) {
             webView?.goBack()
         }
     }
 }
-

@@ -1,66 +1,44 @@
 package com.example.ninejobinterviewapp.ui.home
 
-
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun CustomHomeTopBar(
-    title: String,
-    backgroundColor: Color = Color.White,
-    contentColor: Color = Color.Black,
-    onActionClicked: () -> Unit = {}
+    allSources: List<String>,
+    selectedSource: String,
+    onSourceSelected: (String) -> Unit,
+    selectedSortOption: String,
+    onSortSelected: (String) -> Unit
 ) {
-    Box(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp) // Standard height for AppBar
-            .background(backgroundColor)
+            .background(MaterialTheme.colorScheme.primary) // ✅ Matching Background Color
+            .padding(start = 8.dp, end = 8.dp, top = 32.dp, bottom = 12.dp), // ✅ Matching Padding
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        // Title aligned to the center
-        Text(
-            text = title,
-            color = contentColor,
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.align(Alignment.Center)
+        // ✅ Source Filter Dropdown
+        DropdownMenuComponent(
+            label = "Source",
+            options = listOf("All Sources") + allSources,
+            selectedOption = selectedSource,
+            onOptionSelected = onSourceSelected
         )
 
-        // Optional actions, like a menu icon or other buttons, aligned to the right
-        IconButton(
-            onClick = onActionClicked,
-            modifier = Modifier.align(Alignment.CenterEnd)
-        ) {
-            // Replace with your icon or image resource
-            Icon(
-                imageVector = Icons.Filled.MoreVert, // Material icon for more options
-                contentDescription = "More options",
-                tint = contentColor
-            )
-        }
+        // ✅ Sort Dropdown
+        DropdownMenuComponent(
+            label = "Sort",
+            options = listOf("Latest", "Oldest"),
+            selectedOption = selectedSortOption,
+            onOptionSelected = onSortSelected
+        )
     }
-}
-
-@Preview
-@Composable
-fun PreviewCustomTopBar() {
-    CustomHomeTopBar(
-        title = "Latest News",
-        backgroundColor = Color.White,
-        contentColor = Color.Black,
-        onActionClicked = { /* Handle your action */ }
-    )
 }
