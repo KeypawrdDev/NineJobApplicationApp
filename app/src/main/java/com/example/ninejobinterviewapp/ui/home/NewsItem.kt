@@ -13,12 +13,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.ninejobinterviewapp.data.model.Article
+import com.example.ninejobinterviewapp.utils.formatPublishedTime
+
 
 @Composable
 fun NewsItem(
     article: Article,
     onClick: () -> Unit
 ) {
+    // ✅ Format Published Time
+    val formattedTime = formatPublishedTime(article.publishedAt)
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,15 +45,26 @@ fun NewsItem(
                 )
             }
 
+            // ✅ Show News Title
             Text(
                 text = article.title,
                 style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier.padding(vertical = 4.dp)
             )
+
+            // ✅ Show Source
             Text(
                 text = "Source: ${article.source.name}",
                 style = MaterialTheme.typography.labelSmall,
                 color = Color.Gray
+            )
+
+            // ✅ Show Published Time
+            Text(
+                text = "Published: $formattedTime",
+                style = MaterialTheme.typography.labelSmall,
+                color = Color.Gray,
+                modifier = Modifier.padding(top = 2.dp)
             )
         }
     }

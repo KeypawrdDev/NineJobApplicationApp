@@ -6,7 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.ninejobinterviewapp.ui.NewsScreen
+import com.example.ninejobinterviewapp.ui.home.NewsScreen
 import com.example.ninejobinterviewapp.ui.webview.WebViewScreen
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
