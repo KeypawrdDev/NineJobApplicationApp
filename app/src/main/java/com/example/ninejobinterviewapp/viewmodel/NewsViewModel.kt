@@ -18,7 +18,7 @@ class NewsViewModel(private val repository: NewsRepository = NewsRepository()) :
         fetchNews()
     }
 
-    private fun fetchNews() {
+    internal fun fetchNews() {
         viewModelScope.launch {
             try {
                 val response = repository.getLatestNews()

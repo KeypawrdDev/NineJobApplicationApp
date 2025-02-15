@@ -56,6 +56,7 @@ android {
 
 dependencies {
 
+
 //    implementation(libs.androidx.compose.ui)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
@@ -77,6 +78,12 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.androidx.core.testing)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    androidTestImplementation(libs.mockito.core)  // Correct reference to mockito-core
+    androidTestImplementation(libs.mockito.kotlin)
+    androidTestImplementation(libs.mockk.android)  // Make sure you're using the latest version of mockk-android
+
 }
