@@ -25,9 +25,11 @@ class NewsViewModel(private val repository: NewsRepository = NewsRepository()) :
 
                 // ✅ Handle case where urlToImage is null
                 val articlesWithValidImage = response.articles.map { article ->
-                    article.copy(urlToImage = article.urlToImage ?: "")
+                    article.copy(
+                        title = article.title ?: "No Title Available", // Default title if null
+                        urlToImage = article.urlToImage ?: "", // Default image URL if null
+                    )
                 }
-
                 _newsState.value = articlesWithValidImage
                 Log.d("API_RESPONSE", "Total Articles: ${articlesWithValidImage.size}")
 

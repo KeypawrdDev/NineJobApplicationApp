@@ -10,7 +10,6 @@ import androidx.compose.ui.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.ninejobinterviewapp.data.model.Article
@@ -44,11 +43,11 @@ fun NewsItem(
                 )
             }
             Text(
-                text = article.title,
+                text = article.title ?: "No Title Available",
                 style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier
                     .padding(vertical = 4.dp)
-                    .testTag("article_title_${article.title.replace(" ", "_")}")  // Replace spaces with underscores
+//                    .testTag("article_title_${article.title.replace(" ", "_")}")  // Replace spaces with underscores
             )
 
             Text(

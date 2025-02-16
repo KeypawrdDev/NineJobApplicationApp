@@ -1,4 +1,4 @@
-package com.example.ninejobinterviewapp.ui
+package com.example.ninejobinterviewapp.ui.webview
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

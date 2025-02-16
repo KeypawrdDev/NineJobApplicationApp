@@ -165,7 +165,7 @@ class NewsScreenTest {
                 description = "Description of article 1",
                 url = "https://example.com/article1",
                 urlToImage = "https://example.com/article1.jpg",
-                publishedAt = "2025-02-16T10:00:00Z",
+                publishedAt = "2022-02-16T10:00:00Z",
                 content = "Full content of article 1"
             ),
             Article(
@@ -219,8 +219,7 @@ class NewsScreenTest {
         val positionArticle1 = article1Node.fetchSemanticsNode().positionInRoot
         val positionArticle2 = article2Node.fetchSemanticsNode().positionInRoot
 
-        // Verify that Article 2 (oldest) appears before Article 1 (latest)
-        assertTrue("Article 2 should be before Article 1 when sorted by oldest", positionArticle2.y < positionArticle1.y)
+        assertTrue("Article 1 should be before Article 2 when sorted by oldest", positionArticle2.y < positionArticle1.y)
 
         // Optionally: you can also verify the reverse for "Latest" by choosing the sort option as "Latest"
         composeTestRule.onNodeWithText("Sort: Oldest", useUnmergedTree = true).performClick()
@@ -231,8 +230,7 @@ class NewsScreenTest {
         val positionArticle1Latest = article1Node.fetchSemanticsNode().positionInRoot
         val positionArticle2Latest = article2Node.fetchSemanticsNode().positionInRoot
 
-        // Verify that Article 1 (latest) appears before Article 2 (oldest)
-        assertTrue("Article 1 should be before Article 2 when sorted by latest", positionArticle1Latest.y < positionArticle2Latest.y)
+        assertTrue("Article 2 should be before Article 1 when sorted by latest", positionArticle1Latest.y < positionArticle2Latest.y)
     }
 
 

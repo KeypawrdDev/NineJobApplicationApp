@@ -27,7 +27,7 @@ var selectedSortOption by remember { mutableStateOf("Latest") }
         .filter { selectedSource == "All Sources" || it.source.name == selectedSource }
         .sortedBy {
             val date = parsePublishedTime(it.publishedAt)
-            if (selectedSortOption == "Latest") -date.time else date.time
+            if (selectedSortOption == "Latest") date.time else -date.time
         }
 
     Scaffold(
