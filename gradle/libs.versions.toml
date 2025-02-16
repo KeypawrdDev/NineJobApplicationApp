@@ -18,7 +18,8 @@ retrofit = "2.9.0"
 retrofit-converter-gson = "2.9.0"
 mockitoCore = "4.6.1"  # Add Mockito version
 mockitoKotlin = "4.1.0"
-coreTesting = "2.2.0" # Add Mockito Kotlin version
+coreTesting = "2.2.0"
+navigationTesting = "2.8.7" # Add Mockito Kotlin version
 
 [libraries]
 
@@ -47,6 +48,7 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3"}
 androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtimeAndroid" }
 androidx-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "coreTesting" }
+androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigationTesting" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

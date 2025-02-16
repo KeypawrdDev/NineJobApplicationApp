@@ -1,4 +1,4 @@
-package com.example.ninejobinterviewapp.ui
+package com.example.ninejobinterviewapp.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -10,6 +10,7 @@ import androidx.compose.ui.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.ninejobinterviewapp.data.model.Article
@@ -21,7 +22,6 @@ fun NewsItem(
     article: Article,
     onClick: () -> Unit
 ) {
-    // ✅ Format Published Time
     val formattedTime = formatPublishedTime(article.publishedAt)
 
     Card(
@@ -32,7 +32,6 @@ fun NewsItem(
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
-            // ✅ Show News Image
             if (!article.urlToImage.isNullOrEmpty()) {
                 Image(
                     painter = rememberAsyncImagePainter(article.urlToImage),
@@ -44,22 +43,20 @@ fun NewsItem(
                         .clip(RoundedCornerShape(8.dp))
                 )
             }
-
-            // ✅ Show News Title
             Text(
                 text = article.title,
                 style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(vertical = 4.dp)
+                modifier = Modifier
+                    .padding(vertical = 4.dp)
+                    .testTag("article_title_${article.title.replace(" ", "_")}")  // Replace spaces with underscores
             )
 
-            // ✅ Show Source
             Text(
                 text = "Source: ${article.source.name}",
                 style = MaterialTheme.typography.labelSmall,
                 color = Color.Gray
             )
 
-            // ✅ Show Published Time
             Text(
                 text = "Published: $formattedTime",
                 style = MaterialTheme.typography.labelSmall,
@@ -69,3 +66,4 @@ fun NewsItem(
         }
     }
 }
+
