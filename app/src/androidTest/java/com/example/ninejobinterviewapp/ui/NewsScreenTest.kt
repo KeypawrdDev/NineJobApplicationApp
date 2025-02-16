@@ -11,6 +11,7 @@ import com.example.ninejobinterviewapp.ui.home.NewsScreen
 import com.example.ninejobinterviewapp.viewmodel.NewsViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
+import org.junit.Assert.assertTrue
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.junit.Rule
@@ -154,7 +155,7 @@ class NewsScreenTest {
     }
 
     @Test
-    fun testSortArticles() {
+    fun testArticleOrderAfterSorting() {
         // Prepare mock articles data
         val mockArticles = listOf(
             Article(
@@ -196,39 +197,45 @@ class NewsScreenTest {
         composeTestRule.waitForIdle()
 
         // Log the UI tree for debugging
-        composeTestRule.onRoot().printToLog("UI_Tree_Before_Sort")
+        composeTestRule.onRoot().printToLog("UI_Tree")
 
-        // Simulate user selecting "Sort" dropdown
-        composeTestRule.onNodeWithText("Sort: Latest", useUnmergedTree = true).performClick()
-        composeTestRule.onNodeWithText("Latest", useUnmergedTree = true).performClick()
-        composeTestRule.waitForIdle()
-
-        // Optionally: log the current UI state for further debugging
-        composeTestRule.onRoot().printToLog("UI_Tree_After_Sort")
-
-        // Verify that the articles are now sorted by the latest published date
-        composeTestRule.onNodeWithText("Article 1", useUnmergedTree = true)
-            .performScrollTo()
-            .assertIsDisplayed()  // Article 1 should be visible (latest article first)
-
-        composeTestRule.onNodeWithText("Article 2", useUnmergedTree = true)
-            .performScrollTo()
-            .assertIsDisplayed()  // Article 2 should also be visible (oldest article second)
-
-        // Simulate user selecting "Sort" dropdown again to switch to "Oldest"
+        // Simulate user selecting "Oldest" in the dropdown to sort by date
         composeTestRule.onNodeWithText("Sort: Latest", useUnmergedTree = true).performClick()
         composeTestRule.onNodeWithText("Oldest", useUnmergedTree = true).performClick()
         composeTestRule.waitForIdle()
 
-        // Verify that the articles are now sorted by the oldest published date
-        composeTestRule.onNodeWithText("Article 2", useUnmergedTree = true)
-            .performScrollTo()
-            .assertIsDisplayed()  // Article 2 should be displayed first (oldest article)
+        // Log the UI tree after filtering for debugging
+        composeTestRule.onRoot().printToLog("UI_Tree_After_Sorting")
 
-        composeTestRule.onNodeWithText("Article 1", useUnmergedTree = true)
-            .performScrollTo()
-            .assertIsDisplayed()  // Article 1 should be displayed second (latest article)
+        // Scroll to "Article 1" and verify its position
+        val article1Node = composeTestRule.onNodeWithText("Article 1", useUnmergedTree = true)
+        article1Node.performScrollTo()
+
+        // Scroll to "Article 2" and verify its position
+        val article2Node = composeTestRule.onNodeWithText("Article 2", useUnmergedTree = true)
+        article2Node.performScrollTo()
+
+        // Check the position of the articles to confirm the correct order
+        val positionArticle1 = article1Node.fetchSemanticsNode().positionInRoot
+        val positionArticle2 = article2Node.fetchSemanticsNode().positionInRoot
+
+        // Verify that Article 2 (oldest) appears before Article 1 (latest)
+        assertTrue("Article 2 should be before Article 1 when sorted by oldest", positionArticle2.y < positionArticle1.y)
+
+        // Optionally: you can also verify the reverse for "Latest" by choosing the sort option as "Latest"
+        composeTestRule.onNodeWithText("Sort: Oldest", useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithText("Latest", useUnmergedTree = true).performClick()
+        composeTestRule.waitForIdle()
+
+        // Check positions after selecting "Latest"
+        val positionArticle1Latest = article1Node.fetchSemanticsNode().positionInRoot
+        val positionArticle2Latest = article2Node.fetchSemanticsNode().positionInRoot
+
+        // Verify that Article 1 (latest) appears before Article 2 (oldest)
+        assertTrue("Article 1 should be before Article 2 when sorted by latest", positionArticle1Latest.y < positionArticle2Latest.y)
     }
+
+
 
 
 }
