@@ -8,9 +8,6 @@
       <SelectionState runConfigName="NewsScreenTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testNewsScreenContent()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="testSourceSelection()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
@@ -18,6 +15,9 @@
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="testArticleOrderAfterSorting()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="NewsViewModelAndroidTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

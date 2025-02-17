@@ -10,6 +10,8 @@ interface NewsApiService {
         @Query("q") query: String = "technology",
         @Query("sortBy") sortBy: String = "publishedAt",
         @Query("pageSize") pageSize: Int = 10,
+        @Query("page") page: Int = 1,  // Accept page as a parameter
         @Query("language") language: String = "en"
     ): NewsResponse
 }
+

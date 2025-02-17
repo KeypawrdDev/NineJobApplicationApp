@@ -58,6 +58,7 @@ class NewsScreenTest {
 
         // Simulate the ViewModel returning the mock StateFlow
         coEvery { mockViewModel.newsState } returns stateFlow
+        coEvery { mockViewModel.fetchNews() } returns Unit // Mock fetchNews to avoid making real requests
 
         // Launch the NewsScreen Composable
         composeTestRule.setContent {
@@ -125,6 +126,7 @@ class NewsScreenTest {
 
         // Simulate the ViewModel returning the mock StateFlow
         coEvery { mockViewModel.newsState } returns stateFlow
+        coEvery { mockViewModel.fetchNews() } returns Unit // Mock fetchNews to avoid making real requests
 
         // Launch the NewsScreen Composable
         composeTestRule.setContent {
@@ -187,6 +189,7 @@ class NewsScreenTest {
 
         // Simulate the ViewModel returning the mock StateFlow
         coEvery { mockViewModel.newsState } returns stateFlow
+        coEvery { mockViewModel.fetchNews() } returns Unit // Mock fetchNews to avoid making real requests
 
         // Launch the NewsScreen Composable
         composeTestRule.setContent {

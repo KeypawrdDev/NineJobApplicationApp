@@ -7,6 +7,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.ninejobinterviewapp.utils.parsePublishedTime
 import com.example.ninejobinterviewapp.viewmodel.NewsViewModel
@@ -16,12 +18,12 @@ import java.nio.charset.StandardCharsets
 @Composable
 fun NewsScreen(
     navController: NavController,
-    newsViewModel: NewsViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    newsViewModel: NewsViewModel = viewModel()
 ) {
     val articles by newsViewModel.newsState.collectAsState()
     val allSources = articles.map { it.source.name }.distinct().sorted()
     var selectedSource by remember { mutableStateOf("All Sources") }
-var selectedSortOption by remember { mutableStateOf("Latest") }
+    var selectedSortOption by remember { mutableStateOf("Latest") }
 
     val filteredArticles = articles
         .filter { selectedSource == "All Sources" || it.source.name == selectedSource }
@@ -43,9 +45,8 @@ var selectedSortOption by remember { mutableStateOf("Latest") }
     ) { paddingValues ->
         Column(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .testTag("article_list") // Add a test tag here
+                modifier = Modifier.fillMaxSize().testTag("article_list"),
+                contentPadding = PaddingValues(bottom = 16.dp)
             ) {
                 items(filteredArticles) { article ->
                     val encodedUrl = URLEncoder.encode(article.url, StandardCharsets.UTF_8.toString())
@@ -53,6 +54,22 @@ var selectedSortOption by remember { mutableStateOf("Latest") }
                         article = article,
                         onClick = { navController.navigate("webViewScreen/$encodedUrl") }
                     )
+                }
+
+                // Add an item at the bottom to trigger more data fetch
+                item {
+                    // Trigger next page loading when reaching the bottom
+                    LaunchedEffect(articles) {
+                        // Check if we're at the bottom of the list
+                        if (filteredArticles.isNotEmpty()) {
+                            val lastVisibleItem = filteredArticles.size - 1
+                            val lastItem = filteredArticles[lastVisibleItem]
+                            if (lastItem == filteredArticles.last()) {
+                                // Load more articles when reaching the last item
+                                newsViewModel.fetchNews()
+                            }
+                        }
+                    }
                 }
             }
         }

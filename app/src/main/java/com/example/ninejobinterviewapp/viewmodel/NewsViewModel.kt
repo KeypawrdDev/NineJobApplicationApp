@@ -14,6 +14,9 @@ class NewsViewModel(private val repository: NewsRepository = NewsRepository()) :
     private val _newsState = MutableStateFlow<List<Article>>(emptyList())
     val newsState = _newsState.asStateFlow()
 
+    private var currentPage = 1
+    private val pageSize = 10 // Number of articles to fetch per page
+
     init {
         fetchNews()
     }
@@ -21,22 +24,30 @@ class NewsViewModel(private val repository: NewsRepository = NewsRepository()) :
     internal fun fetchNews() {
         viewModelScope.launch {
             try {
-                val response = repository.getLatestNews()
+                // Fetch the latest batch of articles
+                val response = repository.getLatestNews(page = currentPage, pageSize = pageSize)
 
-                // ✅ Handle case where urlToImage is null
+                // Map articles with valid fields
                 val articlesWithValidImage = response.articles.map { article ->
                     article.copy(
-                        title = article.title ?: "No Title Available", // Default title if null
-                        urlToImage = article.urlToImage ?: "", // Default image URL if null
+                        title = article.title ?: "No Title Available",
+                        urlToImage = article.urlToImage ?: "",
                     )
                 }
-                _newsState.value = articlesWithValidImage
-                Log.d("API_RESPONSE", "Total Articles: ${articlesWithValidImage.size}")
+
+                // Append new articles to the existing list of articles
+                _newsState.value = _newsState.value + articlesWithValidImage
+
+                // Increment the page for the next fetch
+                currentPage++
+
+                Log.d("API_RESPONSE", "Total Articles: ${_newsState.value.size}")
 
             } catch (e: Exception) {
                 Log.e("API_ERROR", "Failed to fetch news: ${e.localizedMessage}")
             }
         }
     }
+
 }
 
