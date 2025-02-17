@@ -43,32 +43,27 @@ fun NewsScreen(
             )
         }
     ) { paddingValues ->
-        Column(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)) {
             LazyColumn(
-                modifier = Modifier.fillMaxSize().testTag("article_list"),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .testTag("article_list"),
                 contentPadding = PaddingValues(bottom = 16.dp)
             ) {
                 items(filteredArticles) { article ->
-                    val encodedUrl = URLEncoder.encode(article.url, StandardCharsets.UTF_8.toString())
+                    val encodedUrl =
+                        URLEncoder.encode(article.url, StandardCharsets.UTF_8.toString())
                     NewsItem(
                         article = article,
                         onClick = { navController.navigate("webViewScreen/$encodedUrl") }
                     )
                 }
-
                 // Add an item at the bottom to trigger more data fetch
                 item {
-                    // Trigger next page loading when reaching the bottom
-                    LaunchedEffect(articles) {
-                        // Check if we're at the bottom of the list
-                        if (filteredArticles.isNotEmpty()) {
-                            val lastVisibleItem = filteredArticles.size - 1
-                            val lastItem = filteredArticles[lastVisibleItem]
-                            if (lastItem == filteredArticles.last()) {
-                                // Load more articles when reaching the last item
-                                newsViewModel.fetchNews()
-                            }
-                        }
+                    if (filteredArticles.isNotEmpty()) {
+                        newsViewModel.fetchNews()
                     }
                 }
             }
