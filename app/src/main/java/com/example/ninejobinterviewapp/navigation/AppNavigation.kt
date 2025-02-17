@@ -18,12 +18,12 @@ fun AppNavigation(navController: NavHostController) {
         navController = navController,
         startDestination = "newsScreen"
     ) {
-        // ✅ News List Screen
+        // News List Screen
         composable(route = "newsScreen") {
             NewsScreen(navController = navController)
         }
 
-        // ✅ WebView Screen with URL Argument
+        // WebView Screen with URL Argument
         composable(
             route = "webViewScreen/{url}",
             arguments = listOf(

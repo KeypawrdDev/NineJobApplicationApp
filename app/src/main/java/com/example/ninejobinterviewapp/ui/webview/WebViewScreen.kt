@@ -25,10 +25,9 @@ fun WebViewScreen(
     var backEnabled by remember { mutableStateOf(false) }
     var webView: WebView? = null
 
-    // ✅ Decode URL for WebView
+    // Decode URL for WebView
     val decodedUrl = URLDecoder.decode(url, StandardCharsets.UTF_8.toString())
 
-    // ✅ Use Scaffold for Proper Screen Structure
     Scaffold(
         topBar = {
             CustomWebServiceTopBar(
@@ -43,7 +42,7 @@ fun WebViewScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            // ✅ WebView Container
+            // WebView Container
             AndroidView(
                 factory = { context ->
                     WebView(context).apply {
@@ -65,7 +64,7 @@ fun WebViewScreen(
             )
         }
 
-        // ✅ Back Handler for WebView Navigation
+        // Back Handler for WebView Navigation
         BackHandler(enabled = backEnabled) {
             webView?.goBack()
         }

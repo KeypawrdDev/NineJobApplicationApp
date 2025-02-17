@@ -29,7 +29,7 @@ fun CustomWebServiceTopBar(
             .padding(start = 8.dp, end = 8.dp, top = 32.dp, bottom = 12.dp), // ✅ Padding applied to the whole top bar
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        // ✅ Back Button
+        //Back Button
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             contentDescription = "Back",
@@ -39,7 +39,7 @@ fun CustomWebServiceTopBar(
                 .clickable { onBackClick() }
         )
 
-        // ✅ Title with Ellipsis and Larger Font Size
+        //Title with Ellipsis and Larger Font Size
         Text(
             text = title,
             style = MaterialTheme.typography.titleLarge.copy(fontSize = 20.sp),
@@ -51,7 +51,7 @@ fun CustomWebServiceTopBar(
             overflow = TextOverflow.Ellipsis
         )
 
-        // ✅ Share Button
+        //Share Button
         Icon(
             imageVector = Icons.Default.Share,
             contentDescription = "Share",

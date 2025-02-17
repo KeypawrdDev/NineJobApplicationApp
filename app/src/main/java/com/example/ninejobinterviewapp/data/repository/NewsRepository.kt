@@ -7,6 +7,7 @@ import com.example.ninejobinterviewapp.data.model.NewsResponse
 class NewsRepository(
     private val apiService: NewsApiService = RetrofitClient.api // Inject API service
 ) {
+    // Get the latest news via API request.
     suspend fun getLatestNews(page: Int = 1, pageSize: Int = 10): NewsResponse {
         return apiService.getLatestNews(
             page = page,       // Specify the page number

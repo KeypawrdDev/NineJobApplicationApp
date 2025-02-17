@@ -5,6 +5,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
+// Function to format the published time into a human-readable format
 fun formatPublishedTime(publishedAt: String): String {
     return try {
         val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())

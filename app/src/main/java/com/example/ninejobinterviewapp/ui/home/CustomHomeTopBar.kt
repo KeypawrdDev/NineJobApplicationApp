@@ -21,11 +21,11 @@ fun CustomHomeTopBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.primary) // ✅ Matching Background Color
-            .padding(start = 8.dp, end = 8.dp, top = 32.dp, bottom = 12.dp), // ✅ Matching Padding
+            .background(MaterialTheme.colorScheme.primary) // Matching Background Color
+            .padding(start = 8.dp, end = 8.dp, top = 32.dp, bottom = 12.dp), // Matching Padding
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        // ✅ Source Filter Dropdown
+        // Source Filter Dropdown
         DropdownMenuComponent(
             label = "Source",
             options = listOf("All Sources") + allSources,
@@ -33,7 +33,7 @@ fun CustomHomeTopBar(
             onOptionSelected = onSourceSelected
         )
 
-        // ✅ Sort Dropdown
+        // Sort Dropdown
         DropdownMenuComponent(
             label = "Sort",
             options = listOf("Latest", "Oldest"),

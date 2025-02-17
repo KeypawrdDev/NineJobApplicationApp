@@ -18,51 +18,56 @@ import com.example.ninejobinterviewapp.utils.formatPublishedTime
 
 @Composable
 fun NewsItem(
-    article: Article,
-    onClick: () -> Unit
+    article: Article,  // Article object containing information to display
+    onClick: () -> Unit  // Callback for handling click events on the NewsItem
 ) {
+    // Format the published time of the article
     val formattedTime = formatPublishedTime(article.publishedAt)
 
+    // Card that contains the entire article item
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-            .clickable(onClick = onClick),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            .fillMaxWidth()  // Make the card take full width
+            .padding(8.dp)  // Add padding around the card
+            .clickable(onClick = onClick),  // Make the card clickable and trigger the onClick callback
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)  // Add elevation to create shadow
     ) {
+        // Column to arrange the contents of the card vertically
         Column(modifier = Modifier.padding(8.dp)) {
+            // Check if the article has an image URL to show the image
             if (!article.urlToImage.isNullOrEmpty()) {
                 Image(
-                    painter = rememberAsyncImagePainter(article.urlToImage),
-                    contentDescription = article.title,
-                    contentScale = ContentScale.Crop,
+                    painter = rememberAsyncImagePainter(article.urlToImage),  // Load the image using Coil
+                    contentDescription = article.title,  // Provide a description for accessibility
+                    contentScale = ContentScale.Crop,  // Crop the image to fill the space
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(150.dp)
-                        .clip(RoundedCornerShape(8.dp))
+                        .fillMaxWidth()  // Make the image take the full width
+                        .height(150.dp)  // Set a fixed height for the image
+                        .clip(RoundedCornerShape(8.dp))  // Round the corners of the image
                 )
             }
+            // Display the article's title, with a fallback message if the title is null
             Text(
-                text = article.title ?: "No Title Available",
-                style = MaterialTheme.typography.headlineSmall,
+                text = article.title ?: "No Title Available",  // Fallback title if null
+                style = MaterialTheme.typography.headlineSmall,  // Use the headline style
                 modifier = Modifier
-                    .padding(vertical = 4.dp)
-//                    .testTag("article_title_${article.title.replace(" ", "_")}")  // Replace spaces with underscores
+                    .padding(vertical = 4.dp)  // Add vertical padding around the title
             )
 
+            // Display the article's source name
             Text(
-                text = "Source: ${article.source.name}",
-                style = MaterialTheme.typography.labelSmall,
-                color = Color.Gray
+                text = "Source: ${article.source.name}",  // Show the source of the article
+                style = MaterialTheme.typography.labelSmall,  // Use a smaller label style
+                color = Color.Gray  // Set the text color to gray
             )
 
+            // Display the formatted published date of the article
             Text(
-                text = "Published: $formattedTime",
-                style = MaterialTheme.typography.labelSmall,
-                color = Color.Gray,
-                modifier = Modifier.padding(top = 2.dp)
+                text = "Published: $formattedTime",  // Show the formatted time
+                style = MaterialTheme.typography.labelSmall,  // Use a smaller label style
+                color = Color.Gray,  // Set the text color to gray
+                modifier = Modifier.padding(top = 2.dp)  // Add top padding
             )
         }
     }
 }
-
